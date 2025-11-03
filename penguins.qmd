@@ -1,0 +1,20 @@
+---
+title: "Palmer Penguins Dashboard"
+Author: "Brandon Koskie"
+format: dashboard
+---
+
+```{r, echo=FALSE}
+library(tidyverse)
+library(plotly)
+library(janitor)
+
+penguins <- read_csv("data/penguins_lter.csv")
+
+penguins <- penguins %>% 
+  clean_names()
+```
+
+instructions: make a dashboard with two rows. Row 1 should contain two graphs showing any penguin data you like. Row two should contain a table (use knitr::table and select if you like to narrow down the columns. then customize your dashboard by adding colors labels interactivity etc.
+
+optional add text, boxes, color, value boxes, tabs, pages, etc.
