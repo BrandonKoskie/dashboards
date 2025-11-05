@@ -1,5 +1,5 @@
 ---
-title: "Palmer Penguins Dashboard"
+title: "Assignment 8 Palmer Penguins Dashboard"
 Author: "Brandon Koskie"
 format: dashboard
 ---
@@ -18,3 +18,61 @@ penguins <- penguins %>%
 instructions: make a dashboard with two rows. Row 1 should contain two graphs showing any penguin data you like. Row two should contain a table (use knitr::table and select if you like to narrow down the columns. then customize your dashboard by adding colors labels interactivity etc.
 
 optional add text, boxes, color, value boxes, tabs, pages, etc.
+
+## Row 1
+
+```{r}
+p1 <- penguins %>%
+ggplot(aes(x = species, y = body_mass_g, fill = species)) +
+geom_boxplot(alpha = 0.8) +
+labs(
+title = "Body Mass by Species",
+x = "Species",
+y = "Body Mass (g)"
+) +
+scale_fill_brewer(palette = "Set2") +
+theme_minimal(base_size = 14)
+
+ggplotly(p1)
+```
+
+```{r}
+p2 <- penguins %>%
+ggplot(aes(x = culmen_length_mm, y = culmen_depth_mm, color = island)) +
+geom_point(size = 3, alpha = 0.8) +
+labs(
+title = "Culmen Length vs Depth by Island",
+x = "Culmen Length (mm)",
+y = "Culmen Depth (mm)"
+) +
+scale_color_brewer(palette = "Dark2") +
+theme_minimal(base_size = 14)
+
+ggplotly(p2)
+```
+
+## Row 2
+
+```{r}
+penguins %>%
+  select(species, island, sex, body_mass_g, flipper_length_mm) %>%
+  head(10) %>%
+  mutate(
+    body_mass_g = round(body_mass_g, 0),
+    flipper_length_mm = round(flipper_length_mm, 0)
+  ) %>%
+  rename(
+    Species = species,
+    Island = island,
+    Sex = sex,
+    `Body Mass (g)` = body_mass_g,
+    `Flipper Length (mm)` = flipper_length_mm
+  )
+```
+
+```{r}
+penguins <- penguins %>% 
+  select(-comments)
+
+knitr::kable(penguins)
+```
